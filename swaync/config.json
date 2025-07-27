@@ -50,28 +50,57 @@
     }
   },
   "widgets": [
+    "menubar",
+    "buttons-grid",
+    "volume",
     "inhibitors",
     "title",
     "dnd",
-    "notifications"
+    "notifications",
+    "mpris"
   ],
   "widget-config": {
+    "menubar": {
+      "buttons#power": {
+	      "position": "right",
+	      "actions": [
+		      {
+			"label": "shutdown",
+			"command": "systemctl poweroff"
+		      }
+	                 ]
+	            },
+      "menu#suspend": {
+	      "label": "Suspend",
+	      "position": "left",
+	      "actions" : [
+		      {
+			   "label": "Suspend",
+			   "command": "systemctl suspend"
+		      }
+		     ]
+                }
+    },
     "inhibitors": {
       "text": "Inhibitors",
       "button-text": "Clear All",
       "clear-all-button": true
     },
     "title": {
-      "text": "Notifications",
+      "text": "  Notifications",
       "clear-all-button": true,
-      "button-text": "Clear All"
+      "button-text": "󰇾  Clear All"
     },
     "dnd": {
-      "text": "Do Not Disturb"
+      "text": "  Do Not Disturb"
     },
     "label": {
       "max-lines": 5,
       "text": "Label Text"
+    },
+    "volume": {
+      "max-lines": 5,
+      "label": "󰕾"
     },
     "mpris": {
       "image-size": 96,
@@ -81,7 +110,7 @@
     "buttons-grid": {
       "actions": [
         {
-          "label": "直",
+          "label": "",
           "type": "toggle",
           "active": true,
           "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
