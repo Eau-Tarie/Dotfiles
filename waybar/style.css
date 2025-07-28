@@ -177,6 +177,10 @@ label:focus {
     color: #000000;
 }
 
+#cpu tooltip {
+    background-color: rgba(0, 255, 0, 1.0);
+}
+
 #memory {
     background-color: #9b59b6;
 }
