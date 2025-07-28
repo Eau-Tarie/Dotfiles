@@ -7,13 +7,16 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
+	"image#logo",
         "hyprland/workspaces",
         "sway/mode",
         "sway/scratchpad",
         "custom/media"
     ],
     "modules-center": [
-        "sway/window"
+       "custom/clock",
+       "hyprland/window",
+       "hyprland/windowcount"
     ],
     "modules-right": [
         "mpd",
@@ -25,28 +28,67 @@
         "cpu",
         "memory",
         "temperature",
+	"disk",
         "backlight",
         "keyboard-state",
         "sway/language",
         "battery",
         "battery#bat2",
-	"custom/clock",
         "clock",
         "tray",
         "custom/power"
     ],
     // Modules configuration
-     "hyprland/workspaces": {
+    "image#logo": {
+	"path": "/home/eau-tarie/assets/arch-linux-logo.png",
+	"size": 18,
+	"tooltip": false
+    }, 
+    "hyprland/workspaces": {
          //"disable-scroll": true,
          //"all-outputs": true,
          //"warp-on-scroll": false,
-         "format": "{id}",
-	 "format-window-separator": "\n",
+         //"format": "{id}",
+	 "format": "{icon}\t{windows}",
+	 "format-window-separator": "\t",
+	 "window-rewrite-default": "",
+  	 "window-rewrite": {
+		"class<kitty>": "",
+		"title<.*youtube.*>": "", // Windows whose titles contain "youtube"
+		"class<zen-browser>": "󰈹", // Windows whose classes are "firefox"
+		"class<zen-browser> title<.*github.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
+		//"foot": "", // Windows that contain "foot" in either class or title. For optimization reasons, it will only match against a title if at least one other window explicitly matches against a title.
+		"code": "󰨞",
+		"idea": "",
+		"vesktop": "",
+		"nvim": "",
+		"thunar": ""
+	},
 	 "persistent-only": true,
 	 "sort-by-id": true,
 	 "persistent-workspaces": {
 		 "*": [1, 2, 3, 4, 5, 6]
 	 }
+     },
+    "hyprland/window": {
+	    "format": "{}",
+    	    "rewrite": {
+        	"(.*) — Zen Browser": "󰈹\t$1",
+        	"(.*) - kitty": " [$1]",
+		"(.*) - code": " $1",
+		"(.*) IntelliJ IDEA": "\t$1",
+		"GitHub (.*)": " \t$1",
+		"nvim (.*)": "\t$1",
+		"(.*) - Thunar": "\t$1"
+    	    },
+    	    "separate-outputs": true
+     },
+    "hyprland/windowcount" : {
+    	"format": " ",
+    	"format-empty": "󰣇 ",
+    	"format-windowed": "󰊔",
+    	"format-fullscreen": "󰊓",
+    	"separate-outputs": true
      },
     "keyboard-state": {
         "numlock": true,
@@ -109,7 +151,7 @@
         // }
     },
     "clock": {
-        // "timezone": "America/New_York",
+        // "timezone": "America/New_York", 
 	"format": "{:%A, %d %B %Y}",
         "tooltip-format": "<tt>{calendar}</tt>",
 	"calendar": {
@@ -133,13 +175,14 @@
 	}
     },
     "custom/clock": {
-	    "exec": "~/.config/waybar/scripts/clock.sh",
-	    "interval": 1,
-	    "format": "{}"
+	"exec": "~/.config/waybar/scripts/clock.sh",
+	"interval": 1,
+	"format": "{}"
     },
     "cpu": {
+	"interval" : 5,
         "format": "{usage}% ",
-        "tooltip": false
+	"tooltip": true
     },
     "memory": {
         "format": "{}% "
@@ -152,6 +195,17 @@
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]
     },
+    "disk": {
+        "format": "{percentage_used}% ",
+	"path": "/home",
+	"states": {
+		    "good": 0,
+		    "average": 15,
+		    "warning": 60,
+		    "critical": 20
+		 },
+	"tooltip-format": "{used} used out of {total} on {path} ({free} left)"
+    },
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
@@ -159,9 +213,11 @@
     },
     "battery": {
         "states": {
-            // "good": 95,
-            "warning": 30,
-            "critical": 15
+            "good": 95,
+	    "average": 70,
+	    "low": 40,
+            "warning": 25,
+            "critical": 10
         },
         "format": "{capacity}% {icon}",
         "format-full": "{capacity}% {icon}",
