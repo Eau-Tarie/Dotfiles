@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOUR=$(date +%H)
+HOUR=$((10#$(date +%H)))
 SECOND=$(date +%S)
 
 if (( HOUR >= 6 && HOUR < 10 )); then

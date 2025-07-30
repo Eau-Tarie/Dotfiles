@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOUR=$(date +%H)
+HOUR=$((10#$(date +%H)))
 
 if (( HOUR >= 6 && HOUR < 10 )); then
     ICON="󰖜"
