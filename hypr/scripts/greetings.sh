@@ -1,23 +1,23 @@
 #!/bin/bash
 
-HOUR=$(date +%H)
+HOUR=$((10#$(date +%H)))
 
 if (( HOUR >= 6 && HOUR < 10 )); then
     ICON="󰖜"
     GREETING="Good morning"
-    COLOR="#FFA500"
+    COLOR="#FF66CC"
 elif (( HOUR >= 10 && HOUR < 18 )); then
     ICON=""
     GREETING="Good afternoon"
-    COLOR="#00BFFF"
+    COLOR="#FF4500"
 elif (( HOUR >= 18 && HOUR < 22 )); then
     ICON="󰖛"
     GREETING="Good evening"
-    COLOR="#FF4500"
+    COLOR="#D4E2F0"
 else
     ICON=""
     GREETING="Good night"
-    COLOR="#708090"
+    COLOR="#667EFC"
 fi
 
 USER_CAPITALIZED="$(tr '[:lower:]' '[:upper:]' <<< ${USER:0:1})${USER:1}"
