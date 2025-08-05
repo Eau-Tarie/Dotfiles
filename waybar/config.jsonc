@@ -141,7 +141,7 @@
         	"(.*) — Zen Browser": "<span color='#F0810F'><b>󰈹  $1</b></span>",
         	"(.*)kitty": "  [$1]",
 		"(.*) - code": "  $1",
-		"(.*) IntelliJ IDEA": "<span color='#891C5C'><b>  $1</b></span>",
+		"(.*) IntelliJ IDEA": "<span color='#FF66CC'><b>  $1</b></span>",
 		"GitHub (.*)": "  $1",
 		"nvim (.*)": "<span color='#71BD9A'><b>  $1</b></span>",
 		"(.*) - Thunar": "<span color='#E9B459'><b>  $1</b></span>"
