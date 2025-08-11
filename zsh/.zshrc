@@ -1,3 +1,6 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # copy from ~/.bashrc
 bg_white="$(tput setab 7)"
 bg_black="$(tput setab 0)"
@@ -9,8 +12,27 @@ sudo_asci=" ____  _   _ ____   ___
 |____/ \___/|____/ \___/
 _________________________
 "
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+export SUDO_PROMPT="$(tput setaf 1 bold)$sudo_asci$(tput sgr0)
+$(tput setaf 3 bold) Password$(tput sgr0)$(tput dim) for $(tput sgr0)$(tput setaf 2 bold) %p$(tput sgr0) :
+$(tput setaf 4 bold)󰣇 %p  $(tput sgr0)"
+
+GREEN='\e[0;32m'
+BOLDGREEN='\e[1;32m'
+UNDERLINEGREEN='\e[4;32m'
+
+RED='\e[0;31m'
+BOLDRED='\e[1;31m'
+UNDERLINERED='\e[4;31m'
+    
+BLUE='\e[0;34m'
+BOLDBLUE='\e[1;34m'
+UNDERLINEBLUE='\e[4;34m'
+    
+BOLDCYAN='\e[1;36m'
+    
+YELLOW='\e[1;33m'
+    
+RESET='\e[0m'
 
 alias grep='grep --color=auto'
 alias ls='lsd --color always'
@@ -22,9 +44,7 @@ alias ../..="cd ../.."
 alias ~="cd ~/"
 alias /="cd /"
 alias rm="trash"
-export SUDO_PROMPT="$(tput setaf 1 bold)$sudo_asci$(tput sgr0)
-$(tput setaf 3 bold) Password$(tput sgr0)$(tput dim) for $(tput sgr0)$(tput setaf 2 bold) %p$(tput sgr0) :
-$(tput setaf 4 bold)󰣇 $(tput sgr0)"
+
 # Lines configured by zsh-newuser-install
 
 setopt EXTENDED_HISTORY
@@ -42,7 +62,7 @@ bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/eau-tarie/.zshrc'
-
+zstyle ':completion:*' menu select
 autoload -Uz compinit
 autoload -Uz promptinit
 compinit
@@ -56,7 +76,7 @@ eval "$(oh-my-posh init zsh --config ~/dotfiles/zsh/themes/montys.omp.json)"
 # snippet
 reloadZsh(){
     source ~/.zshrc
-    echo " New .zshrc sourced."
+    echo "${GREEN} $HOME/.zshrc reloaded"
 }
 
 editZsh() {
@@ -64,17 +84,15 @@ editZsh() {
     source $HOME/.zshrc
 }
 
-createProject() {
-    GREEN='\033[0;32m'
-    
+createProject() {    
     if [ -z "$1" ] && [ -z "$2" ]; then
-        echo " Error: Missing project name and repository URL."
+        echo "${BOLDRED} ${UNDERLINERED}Error:${RESET} Missing project name and repository URL."
         return 1
     elif [ -z "$1" ]; then
-        echo " Error: Missing project name."
+        echo "${BOLDRED} ${UNDERLINERED}Error:${RESET} Missing project name."
         return 1
     elif [ -z "$2" ]; then
-        echo " Error: Missing repository URL."
+        echo "{$BOLDRED} ${UNDERLINERED}Error:${RESET} Missing repository URL."
         return 1
     fi
 
@@ -83,7 +101,7 @@ createProject() {
 
     # Vérifier si le répertoire existe déjà
     if [ -d "$projectName" ]; then
-        echo " Error: Directory '$projectName' already exists."
+        echo "${BOLDRED} Error:${RESET} Directory '${BOLDBLUE}$projectName${RESET}' already exists."
         return 1
     fi
 
@@ -98,13 +116,9 @@ createProject() {
     git remote get-url origin &>/dev/null || git remote add origin "$projectRepositoryUrl"
     git push -u origin "$currentBranch"
 
-    echo "${GREEN}Project '$projectName' created and pushed successfully into $currentBranch branch !"
+    echo "${BOLDGREEN} ${UNDERLINEGREEN}Success:${RESET} Project '${BOLDBLUE}$projectName${RESET}' ${GREEN}created${RESET} and ${BLUE}pushed${RESET} successfully into ${BOLDCYAN}$currentBranch${RESET} branch !"
 
     git branch develop
-    echo "develop branch created successfully !"
-}
-
-printCurrentBranch() {
-	currentBranch=$(git branch --show-current)
-	echo "$currentBranch"
+    checkout develop
+    echo "${BOLDGREEN} ${UNDERLINEGREEN}Success:${RESET} ${BOLDCYAN}develop${RESET} branch ${GREEN}created${RESET} and ${YELLOW}switched${RESET} successfully !"
 }
