@@ -1,6 +1,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+plugins=(git zsh-syntax-highlighting)
+
 # copy from ~/.bashrc
 bg_white="$(tput setab 7)"
 bg_black="$(tput setab 0)"
@@ -44,7 +46,12 @@ alias ../..="cd ../.."
 alias ~="cd ~/"
 alias /="cd /"
 alias rm="trash"
-
+alias gstatus="git status"
+alias gadd="git add ."
+alias gcommit="git commit"
+alias gpush="git push"
+alias gpull="git pull"
+alias grebase="git rebase"
 # Lines configured by zsh-newuser-install
 
 setopt EXTENDED_HISTORY
@@ -122,3 +129,6 @@ createProject() {
     checkout develop
     echo "${BOLDGREEN} ${UNDERLINEGREEN}Success:${RESET} ${BOLDCYAN}develop${RESET} branch ${GREEN}created${RESET} and ${YELLOW}switched${RESET} successfully !"
 }
+
+
+source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
