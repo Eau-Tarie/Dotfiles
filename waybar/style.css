@@ -335,7 +335,7 @@ button:hover {
 
 }
 
-#battery.above-average {
+#battery.above-average, #battery.average, #battery.below-average {
 	background: #F1A45D;
 	color: #D15837;
 	transition-property: background;
